@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh auth *)",
+      "PowerShell(gh --version)",
+      "PowerShell(gh auth status)",
+      "Bash(node server.js)",
+      "Bash(curl -s http://localhost:3000/api/reports)",
+      "Bash(node -e \"let d='';process.stdin.on\\('data',c=>d+=c\\).on\\('end',\\(\\)=>{const a=JSON.parse\\(d\\);console.log\\('total:',a.length\\);console.log\\('sample:',a[0].location,'/',a[0].category,'/',a[0].status\\)}\\)\")",
+      "Bash(curl -s -X POST http://localhost:3000/api/reports -H \"Content-Type: application/json\" -d '{\"location\":\"測試街 1 號\",\"category\":\"rodent\",\"description\":\"測試通報\",\"reporterName\":\"測試\"}')",
+      "Bash(node -e \"let d='';process.stdin.on\\('data',c=>d+=c\\).on\\('end',\\(\\)=>{const r=JSON.parse\\(d\\);console.log\\('created status:',r.status,'id ok:',!!r.id\\)}\\)\")",
+      "Bash(curl -s -X POST http://localhost:3000/api/reports -H \"Content-Type: application/json\" -d '{\"location\":\"x\",\"description\":\"y\"}')",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -X POST http://localhost:3000/api/reports -H \"Content-Type: application/json\" -d '{\"location\":\"富錦街 99\",\"category\":\"rodent\",\"description\":\"test report\",\"reporterName\":\"tester\"}')",
+      "Bash(node -e \"let d='';process.stdin.on\\('data',c=>d+=c\\).on\\('end',\\(\\)=>console.log\\('total:',JSON.parse\\(d\\).length\\)\\)\")",
+      "Bash(node -e ' *)",
+      "Bash(node -e \"let d='';process.stdin.on\\('data',c=>d+=c\\).on\\('end',\\(\\)=>{const a=JSON.parse\\(d\\);console.log\\('Clean seed loaded -> total reports:',a.length\\);}\\)\")",
+      "Bash(echo \"reports: $\\(curl -s http://localhost:3000/api/reports\\)\")",
+      "Bash(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000/)",
+      "Bash(echo \"page: HTTP $\\(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000/\\)\")",
+      "Bash(curl -s -o /dev/null -w \"localhost:3000 -> HTTP %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(git --version)",
+      "Bash(echo \"git: $\\(git --version 2>&1\\)\")",
+      "Bash(gh --version)",
+      "Bash(echo \"gh:  $\\(gh --version 2>&1)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git -c user.email=you@example.com -c 'user.name=Jingzhong Ville' commit -q -m 'Initial commit: Jingzhong Ville sanitation & rodent control site *)"
+    ]
+  }
+}

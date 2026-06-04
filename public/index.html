@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>民生社區精忠里 ｜ 環境清潔與病媒防治</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- Shared category suggestions (residents may still type their own). -->
+  <datalist id="category-options">
+    <option value="鼠患通報"></option>
+    <option value="環境髒亂"></option>
+    <option value="排水溝 / 孳生源"></option>
+    <option value="病媒蚊"></option>
+    <option value="流浪動物"></option>
+    <option value="其他"></option>
+  </datalist>
+
+  <!-- ===================== Top navigation ===================== -->
+  <header class="topbar">
+    <div class="topbar__brand">
+      <!-- TODO: replace placeholder with the village logo image you provide -->
+      <img class="topbar__logo" src="assets/images/logo-placeholder.png"
+           alt="精忠里標誌" onerror="this.style.display='none'" />
+      <div class="topbar__titles">
+        <span class="topbar__title">民生社區．精忠里</span>
+        <span class="topbar__subtitle">環境清潔與病媒防治平台</span>
+      </div>
+    </div>
+
+    <nav class="view-switch" aria-label="頁面切換">
+      <button class="view-switch__btn is-active" data-view="home">首頁</button>
+      <button class="view-switch__btn" data-view="report">通報問題</button>
+      <button class="view-switch__btn" data-view="chief">里長版</button>
+    </nav>
+  </header>
+
+  <!-- ===================== Home (首頁) ===================== -->
+  <main id="view-home" class="view">
+    <!-- Hero -->
+    <section class="hero">
+      <!-- TODO: replace with your community hero / background image -->
+      <img class="hero__bg" src="assets/images/hero-placeholder.jpg"
+           alt="" aria-hidden="true" onerror="this.classList.add('is-missing')" />
+      <div class="hero__content">
+        <h1 class="hero__title">守護精忠里，環境清潔人人有責</h1>
+        <p class="hero__lead">發現鼠患、髒亂或孳生源？立即線上通報，里辦公處將盡速處理。</p>
+        <button class="btn btn--primary btn--lg" data-nav="report">立即通報問題</button>
+      </div>
+    </section>
+
+    <!-- Featured chief announcements (carousel) -->
+    <section class="section featured" id="featured-section" hidden>
+      <h2 class="section__heading">里長公告</h2>
+      <div class="carousel">
+        <button class="carousel__nav carousel__nav--prev" id="featured-prev" aria-label="上一則">‹</button>
+        <div class="carousel__viewport">
+          <div class="carousel__track" id="featured-track"></div>
+        </div>
+        <button class="carousel__nav carousel__nav--next" id="featured-next" aria-label="下一則">›</button>
+      </div>
+      <div class="carousel__dots" id="featured-dots"></div>
+    </section>
+
+    <!-- Prevention guidelines -->
+    <section class="section">
+      <h2 class="section__heading">病媒防治宣導</h2>
+      <p class="section__intro">做好以下幾點，一起降低社區鼠患與病媒孳生風險。</p>
+      <div class="guide-grid">
+        <article class="guide-card">
+          <img class="guide-card__img" src="assets/images/guide-food.png" alt=""
+               onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'guide-card__img guide-card__img--ph',textContent:'🍱'}))" />
+          <h3 class="guide-card__title">妥善處理廚餘</h3>
+          <p class="guide-card__text">廚餘加蓋密封，當日清運，避免食物殘渣吸引老鼠。</p>
+        </article>
+        <article class="guide-card">
+          <img class="guide-card__img" src="assets/images/guide-clean.png" alt=""
+               onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'guide-card__img guide-card__img--ph',textContent:'🧹'}))" />
+          <h3 class="guide-card__title">環境整潔</h3>
+          <p class="guide-card__text">清除堆積雜物與紙箱，減少老鼠築巢藏匿的空間。</p>
+        </article>
+        <article class="guide-card">
+          <img class="guide-card__img" src="assets/images/guide-drain.png" alt=""
+               onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'guide-card__img guide-card__img--ph',textContent:'💧'}))" />
+          <h3 class="guide-card__title">清除積水</h3>
+          <p class="guide-card__text">定期清理排水溝與容器積水，杜絕病媒蚊孳生源。</p>
+        </article>
+        <article class="guide-card">
+          <img class="guide-card__img" src="assets/images/guide-seal.png" alt=""
+               onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'guide-card__img guide-card__img--ph',textContent:'🚪'}))" />
+          <h3 class="guide-card__title">封堵孔洞</h3>
+          <p class="guide-card__text">填補牆面與管線縫隙，阻斷老鼠進入室內的通道。</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Resident reports (bottom) -->
+    <section class="section">
+      <h2 class="section__heading">里民通報</h2>
+      <p class="section__intro">以下為里民近期的通報事項與目前處理狀態。</p>
+      <div id="resident-feed" class="resident-feed">
+        <p class="resident-feed__empty">載入中…</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== Report page (通報問題) ===================== -->
+  <main id="view-report" class="view" hidden>
+    <section class="section section--report">
+      <h2 class="section__heading">通報問題</h2>
+      <p class="section__intro">請填寫以下資訊，標示 <span class="req">*</span> 為必填欄位。送出後會取得一組刪除碼。</p>
+
+      <form id="report-form" class="report-form">
+        <label class="field">
+          <span class="field__label">通報地點 <span class="req">*</span></span>
+          <input type="text" name="location" maxlength="120" placeholder="例如：富錦街 123 巷" required />
+        </label>
+
+        <label class="field">
+          <span class="field__label">問題類別 <span class="req">*</span></span>
+          <input type="text" name="category" list="category-options" maxlength="40"
+                 placeholder="選擇或自行輸入類別" required />
+        </label>
+
+        <label class="field field--full">
+          <span class="field__label">詳細描述 <span class="req">*</span></span>
+          <textarea name="description" maxlength="2000" rows="4"
+                    placeholder="請描述問題狀況、發生位置與時間…" required></textarea>
+        </label>
+
+        <label class="field">
+          <span class="field__label">聯絡姓名（選填）</span>
+          <input type="text" name="reporterName" maxlength="60" placeholder="例如：陳先生" />
+        </label>
+
+        <label class="field">
+          <span class="field__label">附上照片（選填，最多 4 張）</span>
+          <input type="file" name="images" accept="image/*" multiple data-image-input />
+        </label>
+
+        <div class="image-preview field--full" data-image-preview></div>
+
+        <div class="report-form__actions field--full">
+          <button type="submit" class="btn btn--primary btn--lg">送出通報</button>
+          <span id="report-msg" class="form-msg" role="status"></span>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- ===================== Chief View (里長版) ===================== -->
+  <main id="view-chief" class="view" hidden>
+    <section class="dashboard-head">
+      <div>
+        <h1 class="dashboard-head__title">里長管理後台</h1>
+        <p class="dashboard-head__subtitle">精忠里 環境通報即時概況</p>
+      </div>
+      <div class="dashboard-head__actions">
+        <button id="refresh-btn" class="btn btn--ghost">重新整理</button>
+        <button id="chief-logout" class="btn btn--ghost">登出</button>
+      </div>
+    </section>
+
+    <!-- KPI stat cards -->
+    <section class="stat-grid" id="stat-grid">
+      <article class="stat-card">
+        <span class="stat-card__label">總通報數</span>
+        <span class="stat-card__value" data-stat="total">—</span>
+      </article>
+      <article class="stat-card stat-card--pending">
+        <span class="stat-card__label">待處理</span>
+        <span class="stat-card__value" data-stat="pending">—</span>
+      </article>
+      <article class="stat-card stat-card--progress">
+        <span class="stat-card__label">處理中</span>
+        <span class="stat-card__value" data-stat="in_progress">—</span>
+      </article>
+      <article class="stat-card stat-card--resolved">
+        <span class="stat-card__label">已完成</span>
+        <span class="stat-card__value" data-stat="resolved">—</span>
+      </article>
+    </section>
+
+    <!-- Analytics charts -->
+    <section class="chart-grid">
+      <article class="panel">
+        <h2 class="panel__title">通報狀態分佈</h2>
+        <div class="chart-box"><canvas id="chart-status"></canvas></div>
+      </article>
+      <article class="panel">
+        <h2 class="panel__title">問題類別統計</h2>
+        <div class="chart-box"><canvas id="chart-category"></canvas></div>
+      </article>
+      <article class="panel panel--wide">
+        <h2 class="panel__title">近七日通報趨勢</h2>
+        <div class="chart-box"><canvas id="chart-trend"></canvas></div>
+      </article>
+    </section>
+
+    <!-- Chief posting form -->
+    <section class="panel">
+      <h2 class="panel__title">新增通報（將顯示為里長公告）</h2>
+      <form id="chief-report-form" class="report-form">
+        <label class="field">
+          <span class="field__label">通報地點 <span class="req">*</span></span>
+          <input type="text" name="location" maxlength="120" placeholder="例如：三民路 56 號前" required />
+        </label>
+        <label class="field">
+          <span class="field__label">問題類別 <span class="req">*</span></span>
+          <input type="text" name="category" list="category-options" maxlength="40"
+                 placeholder="選擇或自行輸入類別" required />
+        </label>
+        <label class="field field--full">
+          <span class="field__label">詳細描述 <span class="req">*</span></span>
+          <textarea name="description" maxlength="2000" rows="3" placeholder="請描述問題狀況…" required></textarea>
+        </label>
+        <label class="field">
+          <span class="field__label">通報人 / 來源（選填）</span>
+          <input type="text" name="reporterName" maxlength="60" placeholder="例如：里長巡查" />
+        </label>
+        <label class="field">
+          <span class="field__label">附上照片（選填，最多 4 張）</span>
+          <input type="file" name="images" accept="image/*" multiple data-image-input />
+        </label>
+        <div class="image-preview field--full" data-image-preview></div>
+        <div class="report-form__actions field--full">
+          <button type="submit" class="btn btn--primary">新增通報</button>
+          <span id="chief-report-msg" class="form-msg" role="status"></span>
+        </div>
+      </form>
+    </section>
+
+    <!-- Report management table -->
+    <section class="panel">
+      <h2 class="panel__title">通報管理</h2>
+      <div class="table-wrap">
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th>通報時間</th>
+              <th>地點</th>
+              <th>類別</th>
+              <th>描述</th>
+              <th>照片</th>
+              <th>狀態</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="report-tbody">
+            <tr><td colspan="7" class="table-empty">載入中…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 民生社區精忠里辦公處 ｜ 環境清潔與病媒防治平台</p>
+  </footer>
+
+  <!-- Chart.js for the Chief View analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
