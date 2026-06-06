@@ -1,0 +1,331 @@
+/* ===========================================================================
+   mascot.css — 掃掃 (Sǎo-sǎo), the community cleanup buddy
+   A rounded, on-brand-green character holding a little broom, with sparkles.
+   Sits bottom-right. Idle-bobs + blinks on a loop; waves / points / talks
+   when the script sets data-state on #mascot.
+   =========================================================================== */
+
+.mascot {
+  position: fixed;
+  right: clamp(12px, 3vw, 34px);
+  bottom: clamp(10px, 2.5vh, 26px);
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  pointer-events: none;
+  /* entrance */
+  opacity: 0;
+  transform: translateY(28px) scale(0.9);
+  transition: opacity 0.5s ease, transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.mascot.is-ready { opacity: 1; transform: none; }
+
+/* ---------- Speech bubble ---------- */
+.mascot__bubble {
+  position: relative;
+  max-width: 230px;
+  background: #fff;
+  color: #1a3b30;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.45;
+  padding: 0.7rem 0.95rem;
+  border-radius: 16px;
+  border: 2px solid #d6ece2;
+  box-shadow: 0 10px 24px rgba(15, 40, 30, 0.16);
+  transform-origin: bottom right;
+  opacity: 0;
+  transform: translateY(8px) scale(0.85);
+  transition: opacity 0.28s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+.mascot.is-talking .mascot__bubble { opacity: 1; transform: none; }
+.mascot__bubble::after {
+  content: "";
+  position: absolute;
+  right: 30px;
+  bottom: -9px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-right: 2px solid #d6ece2;
+  border-bottom: 2px solid #d6ece2;
+  transform: rotate(45deg);
+}
+
+/* ---------- Stage / button ---------- */
+.mascot__stage {
+  position: relative;
+  width: 132px;
+  height: 156px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ground shadow */
+.mascot__shadow {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  width: 84px;
+  height: 16px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(15,40,30,0.28), rgba(15,40,30,0) 70%);
+  animation: shadow-pulse 3.2s ease-in-out infinite;
+}
+
+/* ---------- Character (idle bob lives here) ---------- */
+.mascot__char {
+  position: absolute;
+  inset: 0;
+  animation: bob 3.2s ease-in-out infinite;
+}
+
+/* Body — rounded green blob */
+.mascot__body {
+  position: absolute;
+  left: 50%;
+  top: 44px;
+  width: 86px;
+  height: 90px;
+  margin-left: -43px;
+  background: linear-gradient(160deg, #36976f 0%, #1f6f54 78%);
+  border-radius: 47% 47% 44% 44% / 50% 50% 47% 47%;
+  box-shadow:
+    inset 0 -8px 14px rgba(12, 50, 36, 0.35),
+    inset 0 6px 10px rgba(255, 255, 255, 0.18),
+    0 8px 16px rgba(15, 40, 30, 0.18);
+  transform-origin: 50% 100%;
+  transition: transform 0.4s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.mascot__belly {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 52px;
+  height: 50px;
+  margin-left: -26px;
+  background: radial-gradient(ellipse at 50% 35%, rgba(135, 214, 178, 0.55), rgba(135, 214, 178, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Face */
+.mascot__face { position: absolute; inset: 0; }
+.mascot__eye {
+  position: absolute;
+  top: 30px;
+  width: 12px;
+  height: 15px;
+  background: #163d30;
+  border-radius: 50%;
+  transform-origin: center;
+  animation: blink 4.6s infinite;
+}
+.mascot__eye::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2.5px;
+  width: 4.5px;
+  height: 4.5px;
+  background: #eafff5;
+  border-radius: 50%;
+}
+.mascot__eye--l { left: 21px; }
+.mascot__eye--r { right: 21px; animation-delay: 0.06s; }
+
+.mascot__cheek {
+  position: absolute;
+  top: 46px;
+  width: 13px;
+  height: 8px;
+  background: rgba(246, 150, 110, 0.55);
+  border-radius: 50%;
+  filter: blur(0.4px);
+}
+.mascot__cheek--l { left: 12px; }
+.mascot__cheek--r { right: 12px; }
+
+.mascot__mouth {
+  position: absolute;
+  top: 47px;
+  left: 50%;
+  width: 22px;
+  height: 12px;
+  margin-left: -11px;
+  background: #163d30;
+  border-radius: 0 0 22px 22px;
+  overflow: hidden;
+}
+.mascot__mouth::after { /* tongue */
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 12px;
+  height: 7px;
+  margin-left: -6px;
+  background: #f08a8a;
+  border-radius: 50% 50% 50% 50%;
+}
+
+/* Arms */
+.mascot__arm {
+  position: absolute;
+  width: 13px;
+  height: 30px;
+  background: linear-gradient(160deg, #2f8a66, #1c6249);
+  border-radius: 8px;
+  box-shadow: inset 0 -3px 5px rgba(12, 50, 36, 0.3);
+}
+/* back arm — holds the broom on the right */
+.mascot__arm--back {
+  right: 26px;
+  top: 70px;
+  transform: rotate(28deg);
+}
+/* wave arm — left side, raised */
+.mascot__arm--wave {
+  left: 24px;
+  top: 60px;
+  transform-origin: 50% 90%;
+  transform: rotate(8deg);
+}
+.mascot.is-waving .mascot__arm--wave { animation: wave 0.5s ease-in-out 3; }
+
+/* Feet */
+.mascot__feet {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  width: 60px;
+  height: 14px;
+  margin-left: -30px;
+}
+.foot {
+  position: absolute;
+  bottom: 0;
+  width: 24px;
+  height: 13px;
+  background: #163d30;
+  border-radius: 50% 50% 45% 45%;
+}
+.foot--l { left: 2px; }
+.foot--r { right: 2px; }
+
+/* ---------- Broom ---------- */
+.mascot__broom {
+  position: absolute;
+  right: 6px;
+  top: 16px;
+  width: 30px;
+  height: 124px;
+  transform: rotate(11deg);
+  transform-origin: 50% 80%;
+}
+.broom__handle {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 8px;
+  height: 82px;
+  margin-left: -4px;
+  background: linear-gradient(90deg, #d79a4c, #b9772f);
+  border-radius: 5px;
+  box-shadow: inset -1.5px 0 2px rgba(0,0,0,0.18);
+}
+.broom__head {
+  position: absolute;
+  left: 50%;
+  top: 76px;
+  width: 30px;
+  height: 44px;
+  margin-left: -15px;
+  background: repeating-linear-gradient(90deg, #e9c879 0 4px, #d9b25c 4px 8px);
+  border-radius: 6px 6px 3px 3px;
+  clip-path: polygon(28% 0, 72% 0, 100% 100%, 0 100%);
+  box-shadow: inset 0 4px 4px rgba(255,255,255,0.25), inset 0 -4px 6px rgba(120, 80, 20, 0.3);
+}
+.broom__head::before { /* binding band */
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 2px;
+  width: 26px;
+  height: 7px;
+  margin-left: -13px;
+  background: #b9772f;
+  border-radius: 3px;
+}
+
+/* ---------- Sparkles ---------- */
+.mascot__sparkles { position: absolute; inset: 0; pointer-events: none; }
+.spark {
+  position: absolute;
+  color: #f6c453;
+  font-size: 16px;
+  opacity: 0;
+  text-shadow: 0 0 8px rgba(246, 196, 83, 0.6);
+  animation: twinkle 3s ease-in-out infinite;
+}
+.spark--1 { top: 14px; left: 12px; font-size: 18px; animation-delay: 0s; }
+.spark--2 { top: 40px; right: 6px; font-size: 13px; animation-delay: 0.9s; }
+.spark--3 { top: 78px; left: 4px;  font-size: 15px; animation-delay: 1.8s; }
+
+/* ---------- Pointing state: lean toward the page ---------- */
+.mascot[data-state="point"] .mascot__body { transform: rotate(-7deg); }
+.mascot[data-state="point"] .mascot__arm--wave {
+  transform: rotate(-46deg) translateY(-4px);
+  height: 34px;
+}
+
+/* tiny press feedback */
+.mascot__stage:active .mascot__char { transform: scale(0.96); }
+
+/* ===========================================================================
+   Keyframes
+   =========================================================================== */
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-7px); }
+}
+@keyframes shadow-pulse {
+  0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.85; }
+  50%      { transform: translateX(-50%) scale(0.82); opacity: 0.6; }
+}
+@keyframes blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95%           { transform: scaleY(0.1); }
+}
+@keyframes wave {
+  0%, 100% { transform: rotate(8deg); }
+  25%      { transform: rotate(-26deg); }
+  75%      { transform: rotate(-46deg); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+  50%      { opacity: 1; transform: scale(1) rotate(90deg); }
+}
+
+/* ---------- Smaller screens: shrink the buddy ---------- */
+@media (max-width: 760px) {
+  .mascot__stage { width: 104px; height: 124px; transform: scale(0.86); transform-origin: bottom right; }
+  .mascot__bubble { max-width: 180px; font-size: 0.85rem; }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .mascot__char,
+  .mascot__shadow,
+  .mascot__eye,
+  .spark { animation: none !important; }
+  .spark { opacity: 0.9; }
+  .mascot { transition: opacity 0.3s ease; transform: none; }
+}

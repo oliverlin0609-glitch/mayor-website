@@ -1,0 +1,139 @@
+/* ===========================================================================
+   motion.css — scroll-reveal system + small ambient motion
+   Subtle & professional: gentle fade + rise, with light stagger.
+   All motion is gated on .is-in (added by IntersectionObserver) and fully
+   disabled under prefers-reduced-motion.
+   =========================================================================== */
+
+/* ---- Reveal base: hidden, slightly lowered, ready to rise ---- */
+[data-reveal],
+[data-reveal-child] {
+  opacity: 0;
+  transform: translateY(22px);
+  will-change: opacity, transform;
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Children stagger relative to their revealed parent */
+[data-reveal].is-in,
+[data-reveal-child].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* When a parent [data-reveal] enters, its [data-reveal-child] items
+   cascade in. The delay is set inline via --d by the script. */
+[data-reveal-child] {
+  transition-delay: var(--d, 0s);
+}
+
+/* While re-arming a view (resetting for replay) transitions are killed so
+   the reset doesn't visibly flash backwards. */
+[data-reveal].reveal-reset,
+[data-reveal].reveal-reset [data-reveal-child] {
+  transition: none !important;
+}
+
+/* Pop-in for dynamically injected cards / rows / feed items */
+@keyframes js-pop-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+.js-pop {
+  animation: js-pop-up 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* Hero gets a touch more travel + a soft scale for presence */
+[data-reveal="hero"] {
+  transform: translateY(0);
+  opacity: 1; /* hero container stays; its children animate */
+}
+
+/* ---- Hero ambient decoration (soft drifting blobs, on-brand) ---- */
+.hero { isolation: isolate; }
+.hero__decor {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hero__decor::before,
+.hero__decor::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35), rgba(255,255,255,0) 70%);
+}
+.hero__decor::before {
+  width: 360px; height: 360px;
+  top: -120px; right: -60px;
+  animation: drift-a 14s ease-in-out infinite;
+}
+.hero__decor::after {
+  width: 240px; height: 240px;
+  bottom: -110px; left: 8%;
+  background: radial-gradient(circle at 30% 30%, rgba(246,196,83,0.30), rgba(246,196,83,0) 70%);
+  animation: drift-b 18s ease-in-out infinite;
+}
+.hero__content { position: relative; z-index: 1; }
+
+@keyframes drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-26px, 20px) scale(1.08); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(30px, -18px) scale(1.12); }
+}
+
+/* ---- Guide cards: gentle lift on hover (encourages exploration) ---- */
+.guide-card,
+.rfeed-item,
+.stat-card,
+.featured-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.guide-card:hover,
+.rfeed-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 30px rgba(15, 40, 30, 0.12);
+}
+
+/* ---- Animated section heading accent bar grows in ---- */
+.section__heading,
+.panel__title {
+  position: relative;
+}
+
+/* ---- Count-up numbers sit on a tabular baseline so width doesn't jump ---- */
+.stat-card__value { font-variant-numeric: tabular-nums; }
+
+/* ---- Topbar subtle entrance on first load ---- */
+.topbar {
+  animation: topbar-in 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+@keyframes topbar-in {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ===========================================================================
+   Reduced motion — show everything, no transforms, no ambient loops.
+   =========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal-child] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .hero__decor::before,
+  .hero__decor::after,
+  .topbar,
+  .js-pop {
+    animation: none !important;
+  }
+}

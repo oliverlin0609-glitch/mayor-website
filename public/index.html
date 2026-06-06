@@ -6,6 +6,8 @@
   <title>民生社區精忠里 ｜ 環境清潔與病媒防治</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" />
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/motion.css" />
+  <link rel="stylesheet" href="css/mascot.css" />
 </head>
 <body>
   <!-- Shared category suggestions (residents may still type their own). -->
@@ -40,14 +42,15 @@
   <!-- ===================== Home (首頁) ===================== -->
   <main id="view-home" class="view">
     <!-- Hero -->
-    <section class="hero">
+    <section class="hero" data-reveal="hero" data-mascot-say="嗨！我是掃掃，一起守護精忠里乾淨整潔！">
       <!-- TODO: replace with your community hero / background image -->
       <img class="hero__bg" src="assets/images/hero-placeholder.jpg"
            alt="" aria-hidden="true" onerror="this.classList.add('is-missing')" />
+      <div class="hero__decor" aria-hidden="true"></div>
       <div class="hero__content">
-        <h1 class="hero__title">守護精忠里，環境清潔人人有責</h1>
-        <p class="hero__lead">發現鼠患、髒亂或孳生源？立即線上通報，里辦公處將盡速處理。</p>
-        <button class="btn btn--primary btn--lg" data-nav="report">立即通報問題</button>
+        <h1 class="hero__title" data-reveal-child>守護精忠里，環境清潔人人有責</h1>
+        <p class="hero__lead" data-reveal-child>發現鼠患、髒亂或孳生源？立即線上通報，里辦公處將盡速處理。</p>
+        <button class="btn btn--primary btn--lg" data-reveal-child data-nav="report">立即通報問題</button>
       </div>
     </section>
 
@@ -65,29 +68,29 @@
     </section>
 
     <!-- Prevention guidelines -->
-    <section class="section">
-      <h2 class="section__heading">病媒防治宣導</h2>
-      <p class="section__intro">做好以下幾點，一起降低社區鼠患與病媒孳生風險。</p>
+    <section class="section" data-reveal="section" data-mascot-say="做好這幾點，老鼠和病媒蚊就不愛來囉！">
+      <h2 class="section__heading" data-reveal-child>病媒防治宣導</h2>
+      <p class="section__intro" data-reveal-child>做好以下幾點，一起降低社區鼠患與病媒孳生風險。</p>
       <div class="guide-grid">
-        <article class="guide-card">
+        <article class="guide-card" data-reveal-child>
           <img class="guide-card__img" src="assets/images/guide-food.png" alt=""
                onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'guide-card__img guide-card__img--ph',textContent:'🍱'}))" />
           <h3 class="guide-card__title">妥善處理廚餘</h3>
           <p class="guide-card__text">廚餘加蓋密封，當日清運，避免食物殘渣吸引老鼠。</p>
         </article>
-        <article class="guide-card">
+        <article class="guide-card" data-reveal-child>
           <img class="guide-card__img" src="assets/images/guide-clean.png" alt=""
                onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'guide-card__img guide-card__img--ph',textContent:'🧹'}))" />
           <h3 class="guide-card__title">環境整潔</h3>
           <p class="guide-card__text">清除堆積雜物與紙箱，減少老鼠築巢藏匿的空間。</p>
         </article>
-        <article class="guide-card">
+        <article class="guide-card" data-reveal-child>
           <img class="guide-card__img" src="assets/images/guide-drain.png" alt=""
                onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'guide-card__img guide-card__img--ph',textContent:'💧'}))" />
           <h3 class="guide-card__title">清除積水</h3>
           <p class="guide-card__text">定期清理排水溝與容器積水，杜絕病媒蚊孳生源。</p>
         </article>
-        <article class="guide-card">
+        <article class="guide-card" data-reveal-child>
           <img class="guide-card__img" src="assets/images/guide-seal.png" alt=""
                onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'guide-card__img guide-card__img--ph',textContent:'🚪'}))" />
           <h3 class="guide-card__title">封堵孔洞</h3>
@@ -97,9 +100,9 @@
     </section>
 
     <!-- Resident reports (bottom) -->
-    <section class="section">
-      <h2 class="section__heading">里民通報</h2>
-      <p class="section__intro">以下為里民近期的通報事項與目前處理狀態。</p>
+    <section class="section" data-reveal="section" data-mascot-say="里民通報的事項，里辦公處都會盡速處理！">
+      <h2 class="section__heading" data-reveal-child>里民通報</h2>
+      <p class="section__intro" data-reveal-child>以下為里民近期的通報事項與目前處理狀態。</p>
       <div id="resident-feed" class="resident-feed">
         <p class="resident-feed__empty">載入中…</p>
       </div>
@@ -108,41 +111,41 @@
 
   <!-- ===================== Report page (通報問題) ===================== -->
   <main id="view-report" class="view" hidden>
-    <section class="section section--report">
-      <h2 class="section__heading">通報問題</h2>
-      <p class="section__intro">請填寫以下資訊，標示 <span class="req">*</span> 為必填欄位。送出後會取得一組刪除碼。</p>
+    <section class="section section--report" data-reveal="section" data-mascot-say="填好表單送出，記得抄下刪除碼喔！">
+      <h2 class="section__heading" data-reveal-child>通報問題</h2>
+      <p class="section__intro" data-reveal-child>請填寫以下資訊，標示 <span class="req">*</span> 為必填欄位。送出後會取得一組刪除碼。</p>
 
       <form id="report-form" class="report-form">
-        <label class="field">
+        <label class="field" data-reveal-child>
           <span class="field__label">通報地點 <span class="req">*</span></span>
           <input type="text" name="location" maxlength="120" placeholder="例如：富錦街 123 巷" required />
         </label>
 
-        <label class="field">
+        <label class="field" data-reveal-child>
           <span class="field__label">問題類別 <span class="req">*</span></span>
           <input type="text" name="category" list="category-options" maxlength="40"
                  placeholder="選擇或自行輸入類別" required />
         </label>
 
-        <label class="field field--full">
+        <label class="field field--full" data-reveal-child>
           <span class="field__label">詳細描述 <span class="req">*</span></span>
           <textarea name="description" maxlength="2000" rows="4"
                     placeholder="請描述問題狀況、發生位置與時間…" required></textarea>
         </label>
 
-        <label class="field">
+        <label class="field" data-reveal-child>
           <span class="field__label">聯絡姓名（選填）</span>
           <input type="text" name="reporterName" maxlength="60" placeholder="例如：陳先生" />
         </label>
 
-        <label class="field">
+        <label class="field" data-reveal-child>
           <span class="field__label">附上照片（選填，最多 4 張）</span>
           <input type="file" name="images" accept="image/*" multiple data-image-input />
         </label>
 
         <div class="image-preview field--full" data-image-preview></div>
 
-        <div class="report-form__actions field--full">
+        <div class="report-form__actions field--full" data-reveal-child>
           <button type="submit" class="btn btn--primary btn--lg">送出通報</button>
           <span id="report-msg" class="form-msg" role="status"></span>
         </div>
@@ -152,32 +155,32 @@
 
   <!-- ===================== Chief View (里長版) ===================== -->
   <main id="view-chief" class="view" hidden>
-    <section class="dashboard-head">
+    <section class="dashboard-head" data-reveal="section">
       <div>
-        <h1 class="dashboard-head__title">里長管理後台</h1>
-        <p class="dashboard-head__subtitle">精忠里 環境通報即時概況</p>
+        <h1 class="dashboard-head__title" data-reveal-child>里長管理後台</h1>
+        <p class="dashboard-head__subtitle" data-reveal-child>精忠里 環境通報即時概況</p>
       </div>
-      <div class="dashboard-head__actions">
+      <div class="dashboard-head__actions" data-reveal-child>
         <button id="refresh-btn" class="btn btn--ghost">重新整理</button>
         <button id="chief-logout" class="btn btn--ghost">登出</button>
       </div>
     </section>
 
     <!-- KPI stat cards -->
-    <section class="stat-grid" id="stat-grid">
-      <article class="stat-card">
+    <section class="stat-grid" id="stat-grid" data-reveal="section">
+      <article class="stat-card" data-reveal-child>
         <span class="stat-card__label">總通報數</span>
         <span class="stat-card__value" data-stat="total">—</span>
       </article>
-      <article class="stat-card stat-card--pending">
+      <article class="stat-card stat-card--pending" data-reveal-child>
         <span class="stat-card__label">待處理</span>
         <span class="stat-card__value" data-stat="pending">—</span>
       </article>
-      <article class="stat-card stat-card--progress">
+      <article class="stat-card stat-card--progress" data-reveal-child>
         <span class="stat-card__label">處理中</span>
         <span class="stat-card__value" data-stat="in_progress">—</span>
       </article>
-      <article class="stat-card stat-card--resolved">
+      <article class="stat-card stat-card--resolved" data-reveal-child>
         <span class="stat-card__label">已完成</span>
         <span class="stat-card__value" data-stat="resolved">—</span>
       </article>
@@ -185,22 +188,22 @@
 
     <!-- Analytics charts -->
     <section class="chart-grid">
-      <article class="panel">
+      <article class="panel" data-reveal="section">
         <h2 class="panel__title">通報狀態分佈</h2>
         <div class="chart-box"><canvas id="chart-status"></canvas></div>
       </article>
-      <article class="panel">
+      <article class="panel" data-reveal="section">
         <h2 class="panel__title">問題類別統計</h2>
         <div class="chart-box"><canvas id="chart-category"></canvas></div>
       </article>
-      <article class="panel panel--wide">
+      <article class="panel panel--wide" data-reveal="section">
         <h2 class="panel__title">近七日通報趨勢</h2>
         <div class="chart-box"><canvas id="chart-trend"></canvas></div>
       </article>
     </section>
 
     <!-- Chief posting form -->
-    <section class="panel">
+    <section class="panel" data-reveal="section">
       <h2 class="panel__title">新增通報（將顯示為里長公告）</h2>
       <form id="chief-report-form" class="report-form">
         <label class="field">
@@ -233,7 +236,7 @@
     </section>
 
     <!-- Report management table -->
-    <section class="panel">
+    <section class="panel" data-reveal="section">
       <h2 class="panel__title">通報管理</h2>
       <div class="table-wrap">
         <table class="report-table">
@@ -260,8 +263,46 @@
     <p>© 民生社區精忠里辦公處 ｜ 環境清潔與病媒防治平台</p>
   </footer>
 
+  <!-- ===================== Mascot：掃掃 ===================== -->
+  <div class="mascot" id="mascot" aria-hidden="true" data-state="idle">
+    <div class="mascot__bubble" id="mascot-bubble">
+      <span class="mascot__bubble-text" id="mascot-bubble-text"></span>
+    </div>
+    <button class="mascot__stage" id="mascot-stage" type="button" aria-label="社區清潔小幫手 掃掃">
+      <span class="mascot__sparkles" aria-hidden="true">
+        <span class="spark spark--1">✦</span>
+        <span class="spark spark--2">✦</span>
+        <span class="spark spark--3">✦</span>
+      </span>
+      <span class="mascot__shadow"></span>
+      <span class="mascot__char">
+        <span class="mascot__broom">
+          <span class="broom__handle"></span>
+          <span class="broom__head"></span>
+        </span>
+        <span class="mascot__arm mascot__arm--back"></span>
+        <span class="mascot__body">
+          <span class="mascot__belly"></span>
+          <span class="mascot__face">
+            <span class="mascot__eye mascot__eye--l"></span>
+            <span class="mascot__eye mascot__eye--r"></span>
+            <span class="mascot__cheek mascot__cheek--l"></span>
+            <span class="mascot__cheek mascot__cheek--r"></span>
+            <span class="mascot__mouth"></span>
+          </span>
+        </span>
+        <span class="mascot__arm mascot__arm--wave"></span>
+        <span class="mascot__feet">
+          <span class="foot foot--l"></span>
+          <span class="foot foot--r"></span>
+        </span>
+      </span>
+    </button>
+  </div>
+
   <!-- Chart.js for the Chief View analytics -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="js/enhance.js"></script>
   <script type="module" src="js/app.js"></script>
 </body>
 </html>
