@@ -222,8 +222,18 @@ const form = document.getElementById("report-form");
 const formMsg = document.getElementById("report-msg");
 const formImages = attachImageInput(form);
 
+const submitBtn = form.querySelector('button[type="submit"]');
+const submitBtnDefaultText = submitBtn ? submitBtn.textContent : "";
+let submitting = false;
+
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
+  if (submitting) return; // guard against double-clicks while in flight
+  submitting = true;
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = "送出中…";
+  }
   formMsg.textContent = "";
   formMsg.className = "form-msg";
 
@@ -247,6 +257,12 @@ form.addEventListener("submit", async (event) => {
   } catch (err) {
     formMsg.textContent = err.message;
     formMsg.classList.add("is-error");
+  } finally {
+    submitting = false;
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = submitBtnDefaultText;
+    }
   }
 });
 
